@@ -1,4 +1,3 @@
 <x-guest-layout>
-    <livewire:menu-page />
+cek
 </x-guest-layout>
-

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('logo.png') }}" alt="" style="width: 60px">
+                        <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
@@ -44,9 +44,6 @@
 
                         </x-slot>
                     </x-dropdown>
-                    <x-nav-link href="{{ route('report') }}" :active="request()->routeIs('report')">
-                        {{ __('Laporan') }}
-                    </x-nav-link>
                 </div>
             </div>
 

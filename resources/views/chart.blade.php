@@ -1,4 +1,3 @@
 <x-guest-layout>
-    <livewire:menu-page />
+    @dump($chart)
 </x-guest-layout>
-
