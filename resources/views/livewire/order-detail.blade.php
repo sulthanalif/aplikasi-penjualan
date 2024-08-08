@@ -14,8 +14,8 @@
                 <p class="text-gray-500">{{ $order->table->code }} ({{ $order->table->number }})</p>
             </div>
             <div>
-                <p class="font-semibold">Total Harga:</p>
-                <p class="text-gray-500">Rp.{{ number_format($order->total_price, '0', ',', '.') }}</p>
+                <p class="font-semibold">Catatan:</p>
+                <p class="text-gray-500">{{ $order->note }}</p>
             </div>
             <div>
                 <p class="font-semibold">Status Pesanan:</p>
@@ -46,10 +46,16 @@
                             <td class="border px-4 py-2">Rp.{{ number_format($detail->product->price, '0', ',', '.') }}
                             </td>
                             <td class="border text-center px-4 py-2">{{ $detail->quantity }}</td>
-                            <td class="border px-4 py-2">Rp.{{ number_format($detail->total, '0', ',', '.') }}</td>
+                            <td class="border text-center px-4 py-2">Rp.{{ number_format($detail->total, '0', ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" class="border text-end p-4"></th>
+                        <th class="border px-4 py-2">Rp.{{ number_format($order->orderList->sum('total'), '0', '.', '.') }}</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
         <div class="mt-5 flex justify-end gap-2">
@@ -70,23 +76,19 @@
     @if ($modalPayment)
         <x-modal-create>
             <x-slot name="title">
-                Bayar
+                Pemberitahuan!
             </x-slot>
 
-            <form wire:submit='processPayment'>
                 <div>
-                    <x-label for="method" value="{{ __('Pilih Metode') }}" />
-                    <select wire:model.live="method" id="method"
-                        class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                        <option value="">-- Pilih Metode --</option>
-                        <option value="tunai">Tunai</option>
-                        <option value="paymentGateway">Payment Gateway</option>
-                    </select>
+                   <p>Apakah anda yakin ingin membayar pesanan ini?</p>
                 </div>
-                <div class="flex justify-end mt-4">
-                    <x-button>
-                        Simpan
+                <div class="flex justify-end gap-2 mt-4">
+                    <x-button wire:click='successPayment'>
+                        Konfirmasi
                     </x-button>
+                    <x-danger-button wire:click='closeModal'>
+                        Batal
+                    </x-danger-button>
                 </div>
             </form>
         </x-modal-create>
@@ -174,32 +176,5 @@
             </div>
 
         </x-modal-create>
-    @endif
-
-    @if ($snap_token != '')
-        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
-        </script>
-
-        <script type="text/javascript">
-            // SnapToken acquired from previous step
-            snap.pay('{{ $snap_token }}', {
-                // Optional
-                onSuccess: function(result) {
-
-                    // Handle transaction success
-                    window.location.href = "{{ route('success', ['order' => $order->id]) }}";
-                },
-                // Optional
-                onPending: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                },
-                // Optional
-                onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                }
-            });
-        </script>
     @endif
 </div>

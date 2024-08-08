@@ -14,6 +14,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        <!-- Logo -->
+        <link rel="icon" href="{{ url(asset('logo.png')) }}" type="image/x-icon">
+
         <!-- Styles -->
         @livewireStyles
     </head>

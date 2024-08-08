@@ -13,7 +13,7 @@ class Dashboard extends Component
             ->where('status', 'success')
             ->whereDate('date', date('Y-m-d'))
             ->sum('total_price');
-        $order = Order::count();
+        $order = Order::whereDate('date', date('Y-m-d'))->count();
         $orderPaid = Order::where('payment_status', 'Paid')
         ->whereDate('date', date('Y-m-d'))
             ->count();

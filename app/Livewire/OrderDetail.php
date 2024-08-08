@@ -43,11 +43,7 @@ class OrderDetail extends Component
         }
         $order = Order::find($id);
 
-        if ($order->payment_status == 'Unpaid') {
-            if ($order->snap_token != null) {
-                $this->snap_token = $order->snap_token;
-            }
-        } else {
+        if ($order->payment_status == 'Paid') {
             $this->buttonPayment = false;
         }
 
@@ -59,8 +55,8 @@ class OrderDetail extends Component
         $order = Order::find($this->id);
         $order->payment_status = 'Paid';
         $order->save();
-        $this->snap_token = '';
         $this->buttonPayment = false;
+        $this->closeModal();
     }
 
     public function addProduct()
@@ -124,48 +120,21 @@ class OrderDetail extends Component
         $this->product_id = '';
     }
 
-    public function openModalSnap()
-    {
-        $order = Order::find($this->id);
-        $this->snap_token = $order->snap_token;
+    // public function openModalSnap()
+    // {
+    //     $order = Order::find($this->id);
+    //     $this->snap_token = $order->snap_token;
+    // }
 
-    }
-
-    public function processPayment()
-    {
-        $order = Order::find($this->id);
-        if ($this->method == 'tunai') {
-            $order->payment_status = 'Paid';
-            $order->save();
-            $this->closeModal();
-            $this->buttonPayment = false;
-        } elseif ($this->method == 'paymentGateway') {
-            // Set your Merchant Server Key
-            \Midtrans\Config::$serverKey = config('midtrans.serverKey');
-            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-            \Midtrans\Config::$isProduction = false;
-            // Set sanitization on (default)
-            \Midtrans\Config::$isSanitized = true;
-            // Set 3DS transaction for credit card to true
-            \Midtrans\Config::$is3ds = true;
-
-            $params = array(
-                'transaction_details' => array(
-                    'order_id' => $order->no_order,
-                    'gross_amount' => $order->total_price,
-                ),
-                'customer_details' => array(
-                    'first_name' => $order->name,
-                ),
-            );
-
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
-
-            $order->snap_token = $snapToken;
-            $order->save();
-            redirect()->route('order.detail', $this->id);
-        }
-    }
+    // public function processPayment()
+    // {
+    //     $order = Order::find($this->id);
+    //     $order->payment_status = 'Paid';
+    //     $order->save();
+    //     $this->closeModal();
+    //     $this->buttonPayment = false;
+    //     session()->flash('status', 'Payment success');
+    // }
 
     public function updateOrder()
     {

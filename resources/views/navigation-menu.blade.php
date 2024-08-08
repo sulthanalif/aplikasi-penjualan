@@ -22,7 +22,7 @@
                     @hasrole('admin')
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <x-nav-link :active="request()->routeIs('users')">
+                            <x-nav-link :active="request()->routeIs('users')||request()->routeIs('product-category')||request()->routeIs('table')">
                                 Master
 
                                 <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -155,11 +155,7 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
-
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
+                                <button type="submit" class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Logout</button>
                             </form>
                         </x-slot>
                     </x-dropdown>

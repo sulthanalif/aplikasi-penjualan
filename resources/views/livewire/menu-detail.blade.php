@@ -61,8 +61,8 @@
                         <p class="text-gray-500">{{ $order->table->number }}</p>
                     </div>
                     <div>
-                        <p class="font-semibold">Total Harga:</p>
-                        <p class="text-gray-500">Rp.{{ number_format($order->total_price, '0', ',', '.') }}</p>
+                        <p class="font-semibold">Catatan:</p>
+                        <p class="text-gray-500">{{ $order->note }}</p>
                     </div>
                     <div>
                         <p class="font-semibold">Status Pesanan:</p>
@@ -93,10 +93,16 @@
                                     <td class="border px-4 py-2">Rp.{{ number_format($detail->product->price, '0', ',', '.') }}
                                     </td>
                                     <td class="border text-center px-4 py-2">{{ $detail->quantity }}</td>
-                                    <td class="border px-4 py-2">Rp.{{ number_format($detail->total, '0', ',', '.') }}</td>
+                                    <td class="border text-center px-4 py-2">Rp.{{ number_format($detail->total, '0', ',', '.') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4" class="border text-end p-4"></th>
+                                <th class="border px-4 py-2">Rp.{{ number_format($order->orderList->sum('total'), '0', '.', '.') }}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
