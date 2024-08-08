@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\OrderList;
+use App\Models\Table;
 
 class OrderTable extends Component
 {
@@ -120,9 +121,10 @@ class OrderTable extends Component
     {
         $ordersCount = Order::count();
         $this->noOrder = 'OR' . date('Ymd') . mt_rand(1000, 9999) . $ordersCount;
+        $table = Table::find($this->noTable);
         $order = Order::create([
             'no_order' => $this->noOrder,
-            'no_table' => $this->noTable,
+            'table_id' => $table->id,
             'name' => $this->orderBy,
             'total_price' => $this->totalPrice,
             'date' => date('Y-m-d'),
@@ -151,6 +153,7 @@ class OrderTable extends Component
     public function render()
     {
         $products = Product::where('in_stock', true)->get();
+        $tables = Table::all();
         $orders = Order::query()
             ->when($this->search, function ($query) {
                 $query->where('no_order', 'like', '%' . $this->search . '%')
@@ -160,6 +163,6 @@ class OrderTable extends Component
             ->where('date', $this->date)
             ->latest()
             ->paginate(10);
-        return view('livewire.order-table', compact('orders', 'products'));
+        return view('livewire.order-table', compact('orders', 'products', 'tables'));
     }
 }

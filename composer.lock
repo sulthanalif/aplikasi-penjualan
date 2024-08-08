@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "834a32805246835ec518fe21ef33345a",
+    "content-hash": "d69c5e6a089f2e98acfe86a50e8db67f",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -822,6 +822,103 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "giauphan/laravel-qr-code",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giauphan/laravel-qr-code.git",
+                "reference": "d7ab562cbfc2c7ad47523c3992f8731c7586827b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giauphan/laravel-qr-code/zipball/d7ab562cbfc2c7ad47523c3992f8731c7586827b",
+                "reference": "d7ab562cbfc2c7ad47523c3992f8731c7586827b",
+                "shasum": ""
+            },
+            "require": {
+                "giauphan/qr-code": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelQRCode\\Providers\\QRCodeServiceProvider"
+                    ],
+                    "aliases": {
+                        "QRCode": "LaravelQRCode\\Facades\\QRCode"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelQRCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phan Nhut Giau",
+                    "email": "giauphan012@gmail.com"
+                }
+            ],
+            "description": "QR Code Generator for PHP wrapper for Laravel",
+            "support": {
+                "issues": "https://github.com/giauphan/laravel-qr-code/issues",
+                "source": "https://github.com/giauphan/laravel-qr-code/tree/1.0.2"
+            },
+            "time": "2023-10-03T04:36:12+00:00"
+        },
+        {
+            "name": "giauphan/qr-code",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giauphan/qr-code.git",
+                "reference": "681f293c1c55d0771efc764fa7cf7850406bb054"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giauphan/qr-code/zipball/681f293c1c55d0771efc764fa7cf7850406bb054",
+                "reference": "681f293c1c55d0771efc764fa7cf7850406bb054",
+                "shasum": ""
+            },
+            "require": {
+                "giauphan/laravel-qr-code": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers/constants.php",
+                    "src/helpers/functions.php"
+                ],
+                "psr-4": {
+                    "QR_Code\\": "src/QR_Code/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phan Nhut Giau",
+                    "email": "giauphan012@gmail.com"
+                }
+            ],
+            "description": "QR Code Generator for PHP",
+            "support": {
+                "issues": "https://github.com/giauphan/qr-code/issues",
+                "source": "https://github.com/giauphan/qr-code/tree/1.0.1"
+            },
+            "time": "2023-10-03T03:38:28+00:00"
         },
         {
             "name": "graham-campbell/result-type",

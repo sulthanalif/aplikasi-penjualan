@@ -2,24 +2,27 @@
 
 namespace App\Livewire;
 
+use App\Models\Order;
+use App\Models\Table;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
-use App\Models\Order;
 use App\Models\OrderList;
-use Illuminate\Support\Facades\Route;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Route;
 
 class MenuPage extends Component
 {
     use WithPagination;
 
+    public $noTable = '';
+
     public $no_order = '';
+
 
     public $search = '';
     public $noOrder = '';
     public $orderBy = '';
-    public $noTable = '';
     public $note = '';
     public $chart = [];
     public $chart_count = 0;
@@ -30,7 +33,24 @@ class MenuPage extends Component
     public $modalCheckOrder = false;
     public $messageCheck = false;
     public $modalShow = false;
+    public $modalInformation = false;
     public $productShow = [];
+
+    public function mount()
+    {
+        $code = request()->query('code');
+        $table = Table::where('code', $code)->first();
+        if ($table) {
+            $this->noTable = $table->number;
+        } else {
+            $this->openModalInformation();
+        }
+    }
+
+    public function openModalInformation()
+    {
+        $this->modalInformation = true;
+    }
 
     public function openModalShow($id)
     {
@@ -80,9 +100,10 @@ class MenuPage extends Component
     {
         $ordersCount = Order::count();
         $this->noOrder = 'OR' . date('Ymd') . mt_rand(1000, 9999) . $ordersCount;
+        $table = Table::where('number', $this->noTable)->first();
         $order = Order::create([
             'no_order' => $this->noOrder,
-            'no_table' => $this->noTable,
+            'table_id' => $table->id,
             'name' => $this->orderBy,
             'total_price' => $this->totalPrice,
             'date' => date('Y-m-d'),
@@ -130,6 +151,7 @@ class MenuPage extends Component
         $this->modalCheckOrder = false;
         $this->messageCheck = false;
         $this->modalShow = false;
+        $this->modalInformation = false;
         $this->reset(['productShow']);
     }
 

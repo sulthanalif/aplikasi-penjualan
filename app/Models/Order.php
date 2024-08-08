@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'no_order',
-        'no_table',
+        'table_id',
         'name',
         'total_price',
         'date',
@@ -24,5 +24,10 @@ class Order extends Model
     public function orderList()
     {
         return $this->hasMany(OrderList::class);
+    }
+
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
     }
 }

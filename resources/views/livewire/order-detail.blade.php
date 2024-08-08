@@ -11,7 +11,7 @@
             </div>
             <div>
                 <p class="font-semibold">No Meja:</p>
-                <p class="text-gray-500">{{ $order->no_table }}</p>
+                <p class="text-gray-500">{{ $order->table->code }} ({{ $order->table->number }})</p>
             </div>
             <div>
                 <p class="font-semibold">Total Harga:</p>
@@ -56,12 +56,12 @@
             <x-button >
                 <a target="_blank" href="{{ route('invoice', $order) }}">Cetak Invoice</a>
             </x-button>
+            @hasrole('admin|cashier')
             @if ($buttonPayment)
                 <x-button wire:click='openModalPayment'>Bayar</x-button>
             @endif
-
-
             <x-button wire:click='openModalEdit'>Edit</x-button>
+            @endhasrole
             <x-danger-button wire:click='back' wire:navigate>Kembali</x-danger-button>
         </div>
     </div>

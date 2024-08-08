@@ -58,7 +58,7 @@
                     </div>
                     <div>
                         <p class="font-semibold">No Meja:</p>
-                        <p class="text-gray-500">{{ $order->no_table }}</p>
+                        <p class="text-gray-500">{{ $order->table->number }}</p>
                     </div>
                     <div>
                         <p class="font-semibold">Total Harga:</p>

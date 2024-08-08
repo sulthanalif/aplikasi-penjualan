@@ -18,16 +18,18 @@
                     <x-button wire:click="openModalCheckOrder">
                         Cek Pesanan
                     </x-button>
-                    <x-button wire:click="goToCharts">
-                        {{ $chart_count }}
-                        <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 11-4 0 2 2 0 014 0zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </x-button>
+                    @if ($noTable)
+                        <x-button wire:click="goToCharts">
+                            {{ $chart_count }}
+                            <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 11-4 0 2 2 0 014 0zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </x-button>
+                    @endif
                     @if (auth()->check())
-                        <x-button >
+                        <x-button>
                             <a href="{{ route('dashboard') }}" wire:navigate>{{ auth()->user()->name }}</a>
                         </x-button>
                     @endif
@@ -39,16 +41,18 @@
                     <x-button wire:click="openModalCheckOrder">
                         Cek Pesanan
                     </x-button>
-                    <x-button wire:click="goToCharts">
-                        {{ $chart_count }}
-                        <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 11-4 0 2 2 0 014 0zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </x-button>
+                    @if ($noTable)
+                        <x-button wire:click="goToCharts">
+                            {{ $chart_count }}
+                            <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 11-4 0 2 2 0 014 0zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </x-button>
+                    @endif
                     @if (auth()->check())
-                        <x-button >
+                        <x-button>
                             <a href="{{ route('dashboard') }}" wire:navigate>{{ auth()->user()->name }}</a>
                         </x-button>
                     @endif
@@ -80,7 +84,8 @@
                                         <div class="px-4 py-2 flex justify-between">
                                             <div>
                                                 <h2 class="text-lg font-semibold hover:underline">
-                                                    <button class="" wire:click="openModalShow({{ $product->id }})">{{ $product->name }}</button>
+                                                    <button class=""
+                                                        wire:click="openModalShow({{ $product->id }})">{{ $product->name }}</button>
                                                 </h2>
                                                 <span class="text-sm">{{ $product->category->name }}</span>
                                                 <p class="text-sm text-gray-500">
@@ -90,8 +95,8 @@
                                             </div>
                                             <div class="flex justify-center">
                                                 @if ($product->image != null)
-                                                    <img src="{{ asset('storage/images/' . $product->image) }}" alt=""
-                                                        style="width: 100px">
+                                                    <img src="{{ asset('storage/images/' . $product->image) }}"
+                                                        alt="" style="width: 100px">
                                                 @else
                                                     <img src="{{ asset('images.jpeg') }}" alt=""
                                                         style="width: 100px">
@@ -99,7 +104,9 @@
                                             </div>
                                         </div>
                                         <div class="mt-4 flex justify-end px-4 py-2">
-                                            <x-button wire:click="addToCart({{ $product }})">+</x-button>
+                                            @if ($noTable)
+                                                <x-button wire:click="addToCart({{ $product }})">+</x-button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -123,25 +130,24 @@
             </x-slot>
 
             {{-- <div class="px-4 py-2 flex justify-between"> --}}
-                <div class="flex justify-center">
-                    @if ($productShow->image != null)
-                        <img src="{{ asset('storage/images/' . $productShow->image) }}" alt=""
-                            style="width: 200px">
-                    @else
-                        <img src="{{ asset('images.jpeg') }}" alt=""
-                            style="width: 200px">
-                    @endif
-                </div>
-                <div>
-                    <h2 class="text-lg font-semibold hover:underline">
-                        {{ $productShow->name }}
-                    </h2>
-                    <span class="text-sm">{{ $productShow->category->name }}</span>
-                    <p class="text-sm text-gray-500">
-                        {{ $productShow->description }}
-                    </p>
-                    <p class="text-lg font-semibold">Rp.{{ $productShow->price }}</p>
-                </div>
+            <div class="flex justify-center">
+                @if ($productShow->image != null)
+                    <img src="{{ asset('storage/images/' . $productShow->image) }}" alt=""
+                        style="width: 200px">
+                @else
+                    <img src="{{ asset('images.jpeg') }}" alt="" style="width: 200px">
+                @endif
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold hover:underline">
+                    {{ $productShow->name }}
+                </h2>
+                <span class="text-sm">{{ $productShow->category->name }}</span>
+                <p class="text-sm text-gray-500">
+                    {{ $productShow->description }}
+                </p>
+                <p class="text-lg font-semibold">Rp.{{ $productShow->price }}</p>
+            </div>
             {{-- </div> --}}
         </x-modal-create>
     @endif
@@ -154,8 +160,8 @@
 
             <div>
                 <x-label for="no_order" value="{{ __('Nomer Order') }}" />
-                <x-input id="no_order" class="block mt-1 w-50" type="text" name="no_order" wire:model.live="no_order"
-                    required />
+                <x-input id="no_order" class="block mt-1 w-50" type="text" name="no_order"
+                    wire:model.live="no_order" required />
                 <x-input-error for="no_order" class="mt-2" />
                 @if ($messageCheck)
                     <p class="text-red-500 text-sm">No Order Tidak Ditemukan..</p>
@@ -166,6 +172,22 @@
 
             <div class="mt-4 flex justify-end">
                 <x-button wire:click="checkOrder">Cek</x-button>
+            </div>
+        </x-modal-create>
+    @endif
+
+    @if ($modalInformation)
+        <x-modal-create>
+            <x-slot name="title">
+                Pemberitahuan!
+            </x-slot>
+
+            <div>
+                <p>Silahkan scan QR code yang tersedia di meja!</p>
+            </div>
+
+            <div class="mt-4 flex justify-end">
+                <x-danger-button wire:click="closeModal">Tutup</x-danger-button>
             </div>
         </x-modal-create>
     @endif
@@ -215,7 +237,8 @@
                                 <td class="px-6 py-4">Rp.
                                     {{ number_format($cart['price'] * $cart['quantity'], '0', '.', '.') }}</td>
                                 <td class="px-6 py-4">
-                                    <x-danger-button size="sm" wire:click="delete({{ $cart['id'] }})">X</x-danger-button>
+                                    <x-danger-button size="sm"
+                                        wire:click="delete({{ $cart['id'] }})">X</x-danger-button>
                                 </td>
                             </tr>
 
@@ -235,42 +258,42 @@
                     <div class="w-1/2">
                         <div class="mt-4">
                             <x-label for="orderBy" value="{{ __('Pesanan Atas Nama') }}" />
-                            <x-input id="orderBy" class="block mt-1 w-50" type="text" name="orderBy" wire:model.live="orderBy"
-                                required />
+                            <x-input id="orderBy" class="block mt-1 w-50" type="text" name="orderBy"
+                                wire:model.live="orderBy" required />
                             <x-input-error for="orderBy" class="mt-2" />
                         </div>
                         <div class="mt-4">
                             <x-label for="noTable" value="{{ __('Nomor Kursi') }}" />
-                            <x-input id="noTable" class="block mt-1 w-50" type="number" name="noTable" wire:model.live="noTable"
-                                required />
+                            <x-input id="noTable" class="block mt-1 w-50" type="number" name="noTable"
+                                wire:model.live="noTable" readonly />
                             <x-input-error for="noTable" class="mt-2" />
                         </div>
                     </div>
                     <div class="w-1/2">
                         <x-label for="note" value="{{ __('Catatan') }}" />
                         <textarea wire:model.live="note" placeholder="Catatan..."
-                                    class="w-40 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></textarea>
+                            class="w-40 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></textarea>
                     </div>
                 </div>
                 @if ($messageOrder)
                     <div class="flex items-center justify-end mt-4"></div>
-                        <h2 class="text-lg font-semibold">Pesanan Berhasil!</h2>
-                        <h2 class="text-lg font-semibold">No Order : {{ $noOrder }}</h2>
-                        <p style="color: red; font-style: italic;">
-                            Simpan No Order ini jika ingin cek kembali pesanan
-                        </p>
-                    </div>
-                @endif
-                <div class="flex items-center justify-end mt-4">
-                    <x-button class="ms-4" wire:click="storeOrder">
-                        {{ __('Pesan') }}
-                    </x-button>
-                    <x-danger-button class="ms-4" wire:click="closeModal">
-                        {{ __('Tutup') }}
-                    </x-danger-button>
-                </div>
+                    <h2 class="text-lg font-semibold">Pesanan Berhasil!</h2>
+                    <h2 class="text-lg font-semibold">No Order : {{ $noOrder }}</h2>
+                    <p style="color: red; font-style: italic;">
+                        Simpan No Order ini jika ingin cek kembali pesanan
+                    </p>
             </div>
-
-        </x-modal-create>
     @endif
+    <div class="flex items-center justify-end mt-4">
+        <x-button class="ms-4" wire:click="storeOrder">
+            {{ __('Pesan') }}
+        </x-button>
+        <x-danger-button class="ms-4" wire:click="closeModal">
+            {{ __('Tutup') }}
+        </x-danger-button>
+    </div>
+</div>
+
+</x-modal-create>
+@endif
 </div>

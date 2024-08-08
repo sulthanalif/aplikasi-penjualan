@@ -19,6 +19,7 @@
                         {{ __('Pesanan') }}
                     </x-nav-link>
 
+                    @hasrole('admin')
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <x-nav-link :active="request()->routeIs('users')">
@@ -42,11 +43,20 @@
                                 {{ __('Produk dan Kategori') }}
                             </x-dropdown-link>
 
+                            <div class="border-t border-gray-200"></div>
+
+                            <x-dropdown-link :href="route('table')" :active="request()->routeIs('table')">
+                                {{ __('Meja') }}
+                            </x-dropdown-link>
+
                         </x-slot>
                     </x-dropdown>
+                    @endhasrole
+                    @hasrole('admin|owner')
                     <x-nav-link href="{{ route('report') }}" :active="request()->routeIs('report')">
                         {{ __('Laporan') }}
                     </x-nav-link>
+                    @endhasrole
                 </div>
             </div>
 

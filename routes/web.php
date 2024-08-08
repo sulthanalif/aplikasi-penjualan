@@ -27,23 +27,30 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::group(['prefix' => 'master'], function () {
+    Route::group(['prefix' => 'master', 'middleware' => ['role:admin']], function () {
         Route::get('/users', function () {
             return view('master.user');
         })->name('users');
+
         Route::get('/users/create', function () {
             return view('master.create-user');
         })->name('users.create');
 
+        Route::get('/product-category', function () {
+            return view('master.product');
+        })->name('product-category');
+    });
+
+    Route::middleware('role:admin|cashier|owner')->group(function () {
         Route::get('/order', function () {
             return view('master.order');
         })->name('orders');
 
-        Route::get('/product-category', function () {
-            return view('master.product');
-        })->name('product-category');
+        Route::view('/table', 'master.table')->name('table');
 
+    });
+
+    Route::middleware('role:admin|owner')->group(function () {
         Route::view('/report', 'report')->name('report');
-
     });
 });

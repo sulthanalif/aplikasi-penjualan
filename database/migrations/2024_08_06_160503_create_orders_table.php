@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_order');
             $table->string('name');
-            $table->string('no_table');
+            $table->foreignId('table_id')->constrained('tables')->onDelete('cascade');
             $table->decimal('total_price', 10, 2);
             $table->date('date');
             $table->string('status');
