@@ -70,5 +70,5 @@ Start the server
 ![screenshot](screenshot/1.png)
 ![screenshot](screenshot/5.png)
 ![screenshot](screenshot/6.png)
-![screenshot](screenshot/7.png)
+
 
